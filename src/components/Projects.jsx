@@ -11,6 +11,12 @@ const projects = [
     img: "https://raw.githubusercontent.com/r05323028/primer-on-statistics/main/logo.png",
     repo: "https://github.com/r05323028/primer-on-statistics",
   },
+  {
+    title: "Eyes - Taiwanese Public Opinion Mining System",
+    description: "專注於台灣的論壇、新聞來源的輿情挖掘系統",
+    img: "https://raw.githubusercontent.com/r05323028/eyes/main/doc/static/images/brand_dark.jpg",
+    repo: "https://github.com/r05323028/eyes",
+  },
 ];
 
 const ProjectContainer = styled.div`
@@ -24,7 +30,7 @@ const ProjectContainer = styled.div`
 const ProjectImage = styled.img`
   display: flex;
   width: 300px;
-  border-radius: 20%;
+  height: 150px;
   margin: 15px;
 `;
 

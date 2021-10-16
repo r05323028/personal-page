@@ -25,6 +25,9 @@ const ProjectContainer = styled.div`
   max-width: 1200px;
   align-items: flex-start;
   width: 100%;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 const ProjectImage = styled.img`

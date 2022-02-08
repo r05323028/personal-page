@@ -56,11 +56,6 @@ const ProjectSection = styled.div`
   padding: 15px;
   flex-direction: column;
   align-items: center;
-  margin: 0 10px;
-
-  @media (min-width: 1200px) {
-    margin: 0 300px;
-  }
 `;
 
 const ProjectSectionTitle = styled.h1`

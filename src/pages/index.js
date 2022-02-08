@@ -6,6 +6,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Particles from "react-tsparticles";
 import styles from "./index.module.css";
 import Projects from "../components/Projects";
+import Education from "../components/Education";
 
 const options = {
   fpsLimit: 60,
@@ -69,6 +70,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <Projects />
+        <Education />
       </main>
     </Layout>
   );

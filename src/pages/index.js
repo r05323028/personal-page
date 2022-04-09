@@ -7,6 +7,7 @@ import Particles from "react-tsparticles";
 import styles from "./index.module.css";
 import Projects from "../components/Projects";
 import Education from "../components/Education";
+import Articles from "../components/Articles";
 
 const options = {
   fpsLimit: 60,
@@ -70,6 +71,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <Projects />
+        <Articles />
         <Education />
       </main>
     </Layout>

@@ -17,6 +17,14 @@ const projects = [
     img: "https://raw.githubusercontent.com/r05323028/eyes/main/doc/static/images/brand_dark.jpg",
     repo: "https://github.com/r05323028/eyes",
   },
+  {
+    title:
+      "Interactive Multi-Grained Join Model for Targeted Sentiment Analysis",
+    description:
+      "Interactive Multi-Grained Join Model for Targeted Sentiment Analysis (CIKM 2019) 的實作 (使用Tensorflow)",
+    img: "https://raw.githubusercontent.com/r05323028/IMGJM/master/doc/img/model.png",
+    repo: "https://github.com/r05323028/IMGJM",
+  },
 ];
 
 const ProjectContainer = styled.div`

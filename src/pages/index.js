@@ -8,6 +8,7 @@ import styles from "./index.module.css";
 import Projects from "../components/Projects";
 import Education from "../components/Education";
 import Articles from "../components/Articles";
+import Experiences from "../components/Experiences";
 
 const options = {
   fpsLimit: 60,
@@ -72,6 +73,7 @@ export default function Home() {
       <main>
         <Projects />
         <Articles />
+        <Experiences />
         <Education />
       </main>
     </Layout>

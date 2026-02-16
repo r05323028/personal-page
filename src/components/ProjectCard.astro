@@ -12,7 +12,7 @@ export interface Props {
 const { title, description, cover, tags, github, live, category } = Astro.props;
 ---
 
-<article class="project-card group relative overflow-hidden rounded-2xl bg-white shadow-lg cursor-pointer opacity-0">
+<article class="project-card group relative overflow-hidden rounded-2xl bg-white shadow-lg cursor-pointer opacity-0" data-category={category}>
   <!-- Image -->
   <div class="relative aspect-[4/3] overflow-hidden">
     <img 

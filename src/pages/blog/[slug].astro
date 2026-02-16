@@ -1,0 +1,177 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'building-portfolio-with-astro' } },
+    { params: { slug: 'why-i-switched-to-typescript' } },
+    { params: { slug: 'mastering-css-grid-flexbox' } },
+  ];
+}
+
+const { slug } = Astro.params;
+
+const blogPosts = {
+  'building-portfolio-with-astro': {
+    title: "Building My Portfolio with Astro",
+    description: "A deep dive into how I built this portfolio site using Astro, Tailwind CSS, and GSAP animations.",
+    date: "2024-01-15",
+    tags: ["Astro", "Web Development", "Tutorial"],
+    readingTime: "5 min read",
+    content: `
+      <h2>Why Astro?</h2>
+      <p>After trying various frameworks like Next.js, Gatsby, and vanilla HTML, I decided to build my portfolio with Astro. Here's why:</p>
+      
+      <h3>Performance First</h3>
+      <p>Astro's zero-JS-by-default approach means my site loads incredibly fast. Only the interactive components ship JavaScript to the browser.</p>
+      
+      <h3>Content Collections</h3>
+      <p>The built-in content collections with Zod schema validation make managing my blog posts and projects a breeze. Type-safe Markdown is a game-changer.</p>
+      
+      <h2>The Tech Stack</h2>
+      <ul>
+        <li><strong>Astro</strong> - Static site generation</li>
+        <li><strong>Tailwind CSS</strong> - Utility-first styling</li>
+        <li><strong>GSAP</strong> - Smooth scroll animations</li>
+        <li><strong>TypeScript</strong> - Type safety throughout</li>
+      </ul>
+      
+      <h2>Lessons Learned</h2>
+      <ol>
+        <li>Start with content - Design around your actual content, not placeholders</li>
+        <li>Performance matters - Astro's partial hydration is perfect for portfolios</li>
+        <li>Animations should enhance - Not distract from the content</li>
+      </ol>
+      
+      <p>Thanks for reading!</p>
+    `
+  },
+  'why-i-switched-to-typescript': {
+    title: "Why I Switched to TypeScript",
+    description: "My journey from JavaScript to TypeScript and why I think every developer should make the switch.",
+    date: "2024-01-10",
+    tags: ["TypeScript", "JavaScript", "Career"],
+    readingTime: "4 min read",
+    content: `
+      <h2>The JavaScript Days</h2>
+      <p>For years, I wrote vanilla JavaScript without any type checking. It was fast, flexible, and... full of runtime errors I'd only catch in production.</p>
+      
+      <h2>The TypeScript Revelation</h2>
+      <p>After joining a larger team, I was introduced to TypeScript. At first, it felt like unnecessary overhead. But then I experienced:</p>
+      
+      <h3>1. IntelliSense That Actually Works</h3>
+      <p>No more guessing what properties an object has. My IDE now knows everything and suggests the right methods.</p>
+      
+      <h3>2. Refactoring Confidence</h3>
+      <p>Want to rename a function? TypeScript will catch every single reference across your entire codebase.</p>
+      
+      <h2>Conclusion</h2>
+      <p>If you're still writing vanilla JavaScript, give TypeScript a try. Your future self will thank you when you're not debugging undefined is not a function at 2 AM.</p>
+    `
+  },
+  'mastering-css-grid-flexbox': {
+    title: "Mastering CSS Grid and Flexbox",
+    description: "A comprehensive guide to modern CSS layout techniques with practical examples.",
+    date: "2024-01-05",
+    tags: ["CSS", "Web Design", "Tutorial"],
+    readingTime: "8 min read",
+    content: `
+      <h2>Understanding CSS Grid</h2>
+      <p>CSS Grid is a two-dimensional layout system that allows you to create complex layouts with ease. Unlike Flexbox, which is one-dimensional, Grid works on both rows and columns simultaneously.</p>
+      
+      <h2>When to Use Flexbox vs Grid</h2>
+      <ul>
+        <li><strong>Flexbox:</strong> One-dimensional layouts (navigation bars, card footers, centering items)</li>
+        <li><strong>Grid:</strong> Two-dimensional layouts (page layouts, complex dashboards, photo galleries)</li>
+      </ul>
+      
+      <h2>Practical Examples</h2>
+      <p>Here are some common layout patterns you can achieve with these powerful tools...</p>
+    `
+  }
+};
+
+const post = blogPosts[slug as keyof typeof blogPosts];
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const postSlugs = Object.keys(blogPosts);
+const currentIndex = postSlugs.indexOf(slug as string);
+const prevPost = currentIndex > 0 ? { slug: postSlugs[currentIndex - 1], title: blogPosts[postSlugs[currentIndex - 1] as keyof typeof blogPosts].title } : null;
+const nextPost = currentIndex < postSlugs.length - 1 ? { slug: postSlugs[currentIndex + 1], title: blogPosts[postSlugs[currentIndex + 1] as keyof typeof blogPosts].title } : null;
+---
+
+<Layout title={`${post.title} - Your Name`} description={post.description}>
+  <Navigation />
+  
+  <main class="pt-24 pb-16 min-h-screen bg-background">
+    <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header class="mb-8">
+        <div class="flex flex-wrap gap-2 mb-4">
+          {post.tags.map(tag => (
+            <span class="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full">
+              {tag}
+            </span>
+          ))}
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-space font-bold text-primary mb-4">
+          {post.title}
+        </h1>
+        
+        <div class="flex items-center gap-4 text-gray-500">
+          <span>{post.date}</span>
+          <span>·</span>
+          <span>{post.readingTime}</span>
+        </div>
+      </header>
+      
+      <div class="prose prose-lg max-w-none prose-headings:font-space prose-headings:text-primary prose-a:text-accent prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
+      
+      <nav class="mt-16 pt-8 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row justify-between gap-4">
+          {prevPost && (
+            <a href={`/blog/${prevPost.slug}`} class="group flex items-center text-left">
+              <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              <div>
+                <span class="block text-sm text-gray-500">Previous</span>
+                <span class="block text-primary font-medium group-hover:text-accent transition-colors">{prevPost.title}</span>
+              </div>
+            </a>
+          )}
+          
+          {!prevPost && <div />}
+          
+          {nextPost && (
+            <a href={`/blog/${nextPost.slug}`} class="group flex items-center text-right sm:justify-end">
+              <div>
+                <span class="block text-sm text-gray-500">Next</span>
+                <span class="block text-primary font-medium group-hover:text-accent transition-colors">{nextPost.title}</span>
+              </div>
+              <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </nav>
+      
+      <div class="mt-12 text-center">
+        <a href="/blog" class="inline-flex items-center gap-2 text-accent font-medium hover:underline">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to all posts
+        </a>
+      </div>
+    </article>
+  </main>
+  
+  <Footer />
+</Layout>

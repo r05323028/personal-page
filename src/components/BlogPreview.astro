@@ -1,0 +1,194 @@
+---
+// Blog posts relevant to Data Science and ML
+const blogPosts = [
+  {
+    title: "Building Scalable NLP Pipelines with Kubernetes",
+    description: "How we deployed Eyes, a public opinion mining system, using Kubernetes, Argo Workflows, and Celery for processing Taiwanese forum data.",
+    date: "2024-01-15",
+    tags: ["NLP", "Kubernetes", "MLOps"],
+    slug: "building-portfolio-with-astro",
+    readingTime: "8 min read"
+  },
+  {
+    title: "Lessons from IMBD 2020: Manufacturing Analytics",
+    description: "Our winning approach to the Intelligent Manufacturing and Big Data Analytics Contest using time series analysis and anomaly detection.",
+    date: "2024-01-10",
+    tags: ["Time Series", "Manufacturing", "Competition"],
+    slug: "why-i-switched-to-typescript",
+    readingTime: "6 min read"
+  },
+  {
+    title: "Modern NLP: From spaCy to Transformers",
+    description: "The evolution of our opinion mining system from traditional NLP methods to modern transformer-based approaches.",
+    date: "2024-01-05",
+    tags: ["NLP", "spaCy", "Transformers"],
+    slug: "mastering-css-grid-flexbox",
+    readingTime: "7 min read"
+  }
+];
+---
+
+<section id="blog" class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="blog-title text-4xl md:text-5xl font-space font-bold text-primary mb-4 opacity-0">
+        Latest Blog Posts
+      </h2>
+      <p class="blog-desc text-lg text-secondary max-w-2xl mx-auto opacity-0">
+        Insights on data science, machine learning, NLP, and building production ML systems.
+      </p>
+    </div>
+    
+    <!-- Blog Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blogPosts.map((post, index) => (
+        <article class="blog-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 cursor-pointer">
+          <a href={`/blog/${post.slug}`} class="block">
+            <!-- Image Placeholder -->
+            <div class="relative h-48 bg-gradient-to-br from-primary to-accent overflow-hidden">
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <div class="flex flex-wrap gap-2">
+                  {post.tags.slice(0, 2).map(tag => (
+                    <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary text-xs font-medium rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-6">
+              <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                <span>{post.date}</span>
+                <span>·</span>
+                <span>{post.readingTime}</span>
+              </div>
+              
+              <h3 class="text-xl font-space font-bold text-primary mb-2 group-hover:text-accent transition-colors line-clamp-2">
+                {post.title}
+              </h3>
+              
+              <p class="text-gray-600 line-clamp-3">
+                {post.description}
+              </p>
+              
+              <div class="mt-4 flex items-center text-accent font-medium group-hover:gap-2 transition-all">
+                Read More
+                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+    
+    <!-- View All Button -->
+    <div class="text-center mt-12">
+      <a 
+        href="/blog" 
+        class="view-all-btn inline-flex items-center gap-2 px-8 py-3 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-all hover:scale-105 opacity-0"
+      >
+        View All Posts
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReducedMotion) {
+    // Section header animation
+    gsap.to('.blog-title', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.blog-title',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.to('.blog-desc', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.blog-desc',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.blog-title, .blog-desc', { y: 30 });
+    
+    // Blog cards staggered entrance
+    gsap.to('.blog-card', {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.blog-card',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.blog-card', { y: 50, scale: 0.95 });
+    
+    // View all button
+    gsap.to('.view-all-btn', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.view-all-btn',
+        start: 'top 90%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.view-all-btn', { y: 20 });
+  } else {
+    // Show everything without animation
+    document.querySelectorAll('.blog-title, .blog-desc, .blog-card, .view-all-btn').forEach(el => {
+      el?.classList.remove('opacity-0');
+    });
+  }
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

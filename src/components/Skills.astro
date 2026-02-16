@@ -1,0 +1,171 @@
+---
+// Skills Section Component - Based on updated CV
+const skillCategories = [
+  {
+    name: 'DevOps',
+    skills: [
+      { name: 'AWS', icon: 'cloud' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Kubernetes', icon: 'k8s' },
+      { name: 'GitLab CI', icon: 'git' },
+      { name: 'GitHub Actions', icon: 'github' },
+      { name: 'Helm', icon: 'helm' },
+    ]
+  },
+  {
+    name: 'Backend',
+    skills: [
+      { name: 'Python', icon: 'python' },
+      { name: 'FastAPI', icon: 'api' },
+      { name: 'Flask', icon: 'flask' },
+      { name: 'Spring Boot', icon: 'spring' },
+      { name: 'Go/Gin', icon: 'go' },
+    ]
+  },
+  {
+    name: 'Frontend',
+    skills: [
+      { name: 'React', icon: 'react' },
+      { name: 'Next.js', icon: 'nextjs' },
+      { name: 'TypeScript', icon: 'typescript' },
+      { name: 'Redux', icon: 'redux' },
+      { name: 'React Native', icon: 'mobile' },
+    ]
+  },
+  {
+    name: 'ML & Data',
+    skills: [
+      { name: 'TensorFlow', icon: 'tf' },
+      { name: 'spaCy', icon: 'nlp' },
+      { name: 'Scikit-learn', icon: 'ml' },
+      { name: 'Spark SQL', icon: 'spark' },
+      { name: 'XGBoost', icon: 'tree' },
+    ]
+  }
+];
+---
+
+<section id="skills" class="py-24 bg-primary">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="skills-title text-4xl md:text-5xl font-space font-bold text-white mb-4 opacity-0">
+        Skills & Technologies
+      </h2>
+      <p class="skills-desc text-lg text-gray-400 max-w-2xl mx-auto opacity-0">
+        Technologies and tools I use for software engineering, workflow orchestration, and data-intensive applications.
+      </p>
+    </div>
+    
+    <!-- Skills Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {skillCategories.map((category: any) => (
+        <div class="skill-category opacity-0">
+          <h3 class="text-xl font-space font-semibold text-accent mb-6 text-center">
+            {category.name}
+          </h3>
+          <div class="space-y-3">
+            {category.skills.map((skill: any) => (
+              <div 
+                class="skill-item flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group cursor-default"
+                data-skill={skill.name}
+              >
+                <div class="skill-icon w-10 h-10 flex items-center justify-center rounded-lg bg-accent/20 text-accent group-hover:bg-accent group-hover:text-white transition-all">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <span class="text-gray-300 font-medium group-hover:text-white transition-colors">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Additional Skills Tags -->
+    <div class="mt-16">
+      <h3 class="text-center text-lg text-gray-400 mb-6">Additional Expertise</h3>
+      <div class="flex flex-wrap justify-center gap-3">
+        {['Java', 'Kotlin', 'Go', 'Quarkus', 'Flutter', 'MLOps', 'NLP', 'Time Series', 'Workflow Orchestration', 'Plotly', 'Streamlit', 'MLflow', 'Kubeflow', 'PyTorch', 'LightGBM'].map((skill: string) => (
+          <span class="px-4 py-2 bg-white/10 text-gray-300 rounded-full text-sm hover:bg-accent/20 hover:text-accent transition-colors">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReducedMotion) {
+    gsap.to('.skills-title', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.skills-title',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.to('.skills-desc', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.skills-desc',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.skills-title, .skills-desc', { y: 30 });
+    
+    gsap.to('.skill-category', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.skill-category',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.skill-category', { y: 50 });
+    
+    gsap.to('.skill-item', {
+      opacity: 1,
+      scale: 1,
+      duration: 0.5,
+      stagger: 0.03,
+      ease: 'back.out(1.7)',
+      scrollTrigger: {
+        trigger: '.skill-item',
+        start: 'top 90%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.skill-item', { scale: 0.8 });
+  } else {
+    document.querySelectorAll('.skills-title, .skills-desc, .skill-category, .skill-item').forEach(el => {
+      el?.classList.remove('opacity-0');
+    });
+  }
+</script>

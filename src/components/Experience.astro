@@ -1,0 +1,191 @@
+---
+import { resumeData } from '../data/resume';
+
+const { experience, education } = resumeData;
+---
+
+<section id="experience" class="py-24 bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="exp-title text-4xl md:text-5xl font-space font-bold text-primary mb-4 opacity-0">
+        Work Experience
+      </h2>
+      <p class="exp-desc text-lg text-secondary max-w-2xl mx-auto opacity-0">
+        My professional journey and the companies I've had the pleasure to work with.
+      </p>
+    </div>
+    
+    <!-- Timeline -->
+    <div class="relative">
+      <!-- Timeline Line -->
+      <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-accent/30"></div>
+      
+      <!-- Experience Items -->
+      <div class="space-y-12">
+        {experience.map((job, index) => (
+          <div class={`timeline-item relative flex flex-col md:flex-row items-center opacity-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+            <!-- Content -->
+            <div class="w-full md:w-1/2 md:px-8">
+              <div class={`bg-white p-6 rounded-xl shadow-lg border border-gray-100 ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                <span class="inline-block px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-3">
+                  {job.startDate} - {job.endDate}
+                </span>
+                
+                <h3 class="text-xl font-space font-bold text-primary mb-1">
+                  {job.role}
+                </h3>
+                
+                <p class="text-secondary font-medium mb-2">
+                  {job.company} · {job.location}
+                </p>
+                
+                <p class="text-gray-600 mb-4">
+                  {job.description}
+                </p>
+                
+                <div class={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
+                  {job.technologies.map(tech => (
+                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <!-- Timeline Dot -->
+            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent rounded-full border-4 border-white shadow-lg z-10"></div>
+            
+            <!-- Empty Space for Alternating Layout -->
+            <div class="hidden md:block w-1/2"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Education Section -->
+    <div class="mt-20">
+      <h3 class="edu-title text-3xl font-space font-bold text-primary text-center mb-12 opacity-0">
+        Education
+      </h3>
+      
+      <div class="max-w-3xl mx-auto space-y-6">
+        {education.map((edu, index) => (
+          <div class="edu-item bg-white p-6 rounded-xl shadow-lg border border-gray-100 opacity-0">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+              <h4 class="text-xl font-space font-bold text-primary">
+                {edu.degree}
+              </h4>
+              <span class="text-accent font-medium">
+                {edu.year}
+              </span>
+            </div>
+            
+            <p class="text-secondary">
+              {edu.institution} · {edu.location}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReducedMotion) {
+    // Section header animation
+    gsap.to('.exp-title', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.exp-title',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.to('.exp-desc', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.exp-desc',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.exp-title, .exp-desc', { y: 30 });
+    
+    // Timeline items animation
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item, index) => {
+      const isEven = index % 2 === 0;
+      const xOffset = isEven ? -50 : 50;
+      
+      gsap.fromTo(item, 
+        { 
+          opacity: 0, 
+          x: xOffset 
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+    
+    // Education section
+    gsap.to('.edu-title', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.edu-title',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.edu-title', { y: 30 });
+    
+    gsap.to('.edu-item', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.edu-item',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+    
+    gsap.set('.edu-item', { y: 30 });
+  } else {
+    // Show everything without animation
+    document.querySelectorAll('.exp-title, .exp-desc, .timeline-item, .edu-title, .edu-item').forEach(el => {
+      el?.classList.remove('opacity-0');
+    });
+  }
+</script>

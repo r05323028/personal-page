@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #18181B;
+  --color-secondary: #3F3F46;
+  --color-accent: #2563EB;
+  --color-background: #FAFAFA;
+  --color-text: #09090B;
+  
+  --font-family-archivo: 'Archivo', sans-serif;
+  --font-family-space: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Archivo', sans-serif;
+    color: #09090B;
+    background-color: #FAFAFA;
+  }
+}

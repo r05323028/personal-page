@@ -73,18 +73,27 @@ const { experience, education } = resumeData;
       <div class="max-w-3xl mx-auto space-y-6">
         {education.map((edu, index) => (
           <div class="edu-item bg-white p-6 rounded-xl shadow-lg border border-gray-100 opacity-0">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
-              <h4 class="text-xl font-space font-bold text-primary">
-                {edu.degree}
-              </h4>
-              <span class="text-accent font-medium">
-                {edu.year}
-              </span>
+            <div class="flex items-start gap-4">
+              {edu.logo && (
+                <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                  <img src={edu.logo} alt={edu.institution} class="w-full h-full object-contain" />
+                </div>
+              )}
+              <div class="flex-1">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                  <h4 class="text-xl font-space font-bold text-primary">
+                    {edu.degree}
+                  </h4>
+                  <span class="text-accent font-medium">
+                    {edu.year}
+                  </span>
+                </div>
+                
+                <p class="text-secondary">
+                  {edu.institution} · {edu.location}
+                </p>
+              </div>
             </div>
-            
-            <p class="text-secondary">
-              {edu.institution} · {edu.location}
-            </p>
           </div>
         ))}
       </div>

@@ -1,4 +1,72 @@
-export const resumeData = {
+export interface ResumeData {
+  name: string;
+  title: string;
+  quote: string;
+  experience: Array<{
+    company: string;
+    role: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+    technologies: string[];
+    achievements?: string[];
+  }>;
+  education: Array<{
+    institution: string;
+    degree: string;
+    location: string;
+    year: string;
+    thesis?: string;
+    logo?: string;
+  }>;
+  skills: {
+    devops: string[];
+    backend: string[];
+    frontend: string[];
+    distributed: string[];
+    taskQueue: string[];
+    programming: string[];
+    mlFrameworks: string[];
+    visualization: string[];
+    mlops: string[];
+    statistics: string[];
+    treeModels: string[];
+    nlp: string[];
+  };
+  projects: Array<{
+    name: string;
+    role: string;
+    location: string;
+    period: string;
+    description: string;
+    technologies: string[];
+    github?: string;
+  }>;
+  honors: Array<{
+    award: string;
+    event: string;
+    location: string;
+    year: string;
+  }>;
+  presentations: Array<{
+    role: string;
+    event: string;
+    location: string;
+    date: string;
+    topics: string[];
+  }>;
+  contact: {
+    email: string;
+    phone: string;
+    location: string;
+    linkedin: string;
+    github: string;
+    website: string;
+  };
+}
+
+export const resumeData: ResumeData = {
   name: "Sean Chang",
   title: "Sr. Software Engineer",
   quote: "Stay Hungry, Stay Foolish.",
@@ -56,13 +124,15 @@ export const resumeData = {
       degree: "Master in Economics",
       location: "Taipei, Taiwan",
       year: "Aug. 2016 - Aug. 2018",
-      thesis: "Lyrics- and Audio-based Hit Song Prediction"
+      thesis: "Lyrics- and Audio-based Hit Song Prediction",
+      logo: "/ntu.jpg"
     },
     {
       institution: "Fu Jen Catholic University",
       degree: "B.A. in Economics",
       location: "New Taipei City, Taiwan",
-      year: "Sep. 2011 - Jul. 2015"
+      year: "Sep. 2011 - Jul. 2015",
+      logo: "/fju.jpg"
     }
   ],
   

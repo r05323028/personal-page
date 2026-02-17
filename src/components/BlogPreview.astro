@@ -19,8 +19,8 @@ const blogPosts = await getCollection('blog');
     
     <!-- Blog Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {blogPosts.map((post) => (
-        <article class="blog-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 opacity-0">
+      {blogPosts.slice(0, 3).map((post) => (
+        <a href={`/blog/${post.data.slug || post.id}`} class="blog-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 block">
           <div class="relative h-48 bg-gradient-to-br from-primary to-accent overflow-hidden">
             <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
             <div class="absolute bottom-4 left-4 right-4">
@@ -37,18 +37,25 @@ const blogPosts = await getCollection('blog');
           <!-- Content -->
           <div class="p-6">
             <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-              <span>{new Date(post.data.date).toLocaleDateString()}</span>
+              <span>{new Date(post.data.date).toLocaleDateString('zh-TW', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
             </div>
             
             <h3 class="text-xl font-space font-bold text-primary mb-2 group-hover:text-accent transition-colors line-clamp-2">
               {post.data.title}
             </h3>
             
-            <p class="text-gray-600 line-clamp-3">
+            <p class="text-gray-600 line-clamp-3 mb-3">
               {post.data.description}
             </p>
+            
+            <span class="inline-flex items-center gap-2 text-accent font-medium text-sm group-hover:gap-3 transition-all">
+              Read more
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
           </div>
-        </article>
+        </a>
       ))}
     </div>
     

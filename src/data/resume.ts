@@ -1,3 +1,7 @@
+import tsmcLogo from '../assets/tsmc.svg';
+import kklabLogo from '../assets/kklab.png';
+import kkboxLogo from '../assets/kkbox.png';
+
 export interface ResumeData {
   name: string;
   title: string;
@@ -11,6 +15,7 @@ export interface ResumeData {
     description: string;
     technologies: string[];
     achievements?: string[];
+    logo?: string;
   }>;
   education: Array<{
     institution: string;
@@ -83,7 +88,8 @@ export const resumeData: ResumeData = {
       achievements: [
         "Build Workflow Orchestration System for process control and data collection",
         "Design and maintain scalable systems for semiconductor manufacturing operations"
-      ]
+      ],
+      logo: tsmcLogo.src
     },
     {
       company: "KKLab, KKBOX Group",
@@ -100,7 +106,8 @@ export const resumeData: ResumeData = {
         "Lead venture building project related to NLP",
         "Win 1st place in IMBD 2020 (Intelligent Manufacturing and Big Data Analytics Contest)",
         "Maintain and develop KKBOX opinion mining system and sell it to other companies"
-      ]
+      ],
+      logo: kklabLogo.src
     },
     {
       company: "KKLab, KKBOX Group",
@@ -114,7 +121,8 @@ export const resumeData: ResumeData = {
         "Build public opinion mining system by novel NLP models",
         "Maintain app's event log specification and analyze user actions",
         "Win 3rd place in KKBOX inhouse hackathon with KKMeet app"
-      ]
+      ],
+      logo: kkboxLogo.src
     }
   ],
   

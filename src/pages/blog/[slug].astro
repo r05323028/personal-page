@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection('blog');
+  return blogPosts.map(post => ({
+    params: { slug: post.data.slug || post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} - Sean Chang`}>
+  <Navigation />
+  
+  <main class="pt-24 pb-16 min-h-screen bg-background">
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Back to Blog -->
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 text-accent hover:text-primary transition-colors mb-8"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to all posts
+      </a>
+
+      <!-- Post Header -->
+      <header class="bg-gradient-to-br from-primary to-accent rounded-2xl p-8 md:p-12 text-white mb-8">
+        <div class="flex flex-wrap gap-2 mb-4">
+          {post.data.tags.map((tag: string) => (
+            <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full">
+              {tag}
+            </span>
+          ))}
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-space font-bold mb-4">
+          {post.data.title}
+        </h1>
+        
+        <p class="text-xl text-white/90 mb-6">
+          {post.data.description}
+        </p>
+        
+        <div class="flex items-center gap-4 text-white/80 text-sm">
+          <span>{new Date(post.data.date).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          {post.data.readingTime && (
+            <>
+              <span>·</span>
+              <span>{post.data.readingTime}</span>
+            </>
+          )}
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-12">
+        <div class="prose prose-lg max-w-none prose-headings:font-space prose-headings:text-primary prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-code:text-accent prose-pre:bg-gray-50">
+          <Content />
+        </div>
+      </div>
+
+      <!-- Share/Actions -->
+      <div class="mt-8 bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-gray-500">Share this post:</span>
+            <button 
+              class="text-gray-400 hover:text-accent transition-colors" 
+              onclick={`navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!')`}
+              title="Copy link"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
+          </div>
+          <a 
+            href="/blog"
+            class="text-accent font-medium hover:underline flex items-center gap-2"
+          >
+            View all posts
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+  
+  <Footer />
+</Layout>

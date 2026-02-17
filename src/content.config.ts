@@ -1,9 +1,13 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import remarkBreaks from 'remark-breaks';
 
 const projectsCollection = defineCollection({
-  loader: glob({pattern: "**/*.md", base: "./src/content/projects"}),
+  loader: glob({
+    pattern: "**/*.md", 
+    base: "./src/content/projects",
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -23,7 +27,11 @@ const projectsCollection = defineCollection({
 });
 
 const blogCollection = defineCollection({
-  loader: glob({pattern: "**/*.md", base: "./src/content/blog"}),
+  loader: glob({
+    pattern: "**/*.md", 
+    base: "./src/content/blog",
+    generateId: ({ entry, data }) => data.slug || entry,
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

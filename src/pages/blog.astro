@@ -2,19 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
 
-interface BlogPost {
-  title: string;
-  description: string;
-  date: string;
-  tags: string[];
-  slug: string;
-  readingTime: string;
-  content: string;
-}
+const blogPosts = await getCollection('blog');
 
-const blogPosts: BlogPost[] = [
-];
+// Render each post
+const renderedPosts = await Promise.all(
+  blogPosts.map(async (post) => {
+    const { Content } = await render(post);
+    return { post, Content };
+  })
+);
 ---
 
 <Layout title="Blog - Sean Chang">
@@ -34,12 +32,12 @@ const blogPosts: BlogPost[] = [
       
       <!-- Blog Posts - Full Content -->
       <div class="space-y-16">
-        {blogPosts.map((post) => (
-          <article id={`post-${post.slug}`} class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        {renderedPosts.map(({ post, Content }) => (
+          <article id={`post-${post.data.slug || post.id}`} class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
             <!-- Post Header -->
             <div class="bg-gradient-to-br from-primary to-accent p-8 text-white">
               <div class="flex flex-wrap gap-2 mb-4">
-                {post.tags.map((tag) => (
+                {post.data.tags.map((tag: string) => (
                   <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full">
                     {tag}
                   </span>
@@ -47,36 +45,42 @@ const blogPosts: BlogPost[] = [
               </div>
               
               <h2 class="text-2xl md:text-3xl font-space font-bold mb-2">
-                {post.title}
+                {post.data.title}
               </h2>
               
               <div class="flex items-center gap-4 text-white/80 text-sm">
-                <span>{post.date}</span>
-                <span>·</span>
-                <span>{post.readingTime}</span>
+                <span>{new Date(post.data.date).toLocaleDateString()}</span>
+                {post.data.readingTime && (
+                  <>
+                    <span>·</span>
+                    <span>{post.data.readingTime}</span>
+                  </>
+                )}
               </div>
             </div>
             
             <!-- Post Content -->
             <div class="p-8">
               <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                {post.description}
+                {post.data.description}
               </p>
               
-              <div class="prose prose-lg max-w-none prose-headings:font-space prose-headings:text-primary prose-a:text-accent prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
+              <div class="prose prose-lg max-w-none prose-headings:font-space prose-headings:text-primary prose-a:text-accent prose-a:no-underline hover:prose-a:underline">
+                <Content />
+              </div>
               
               <!-- Share/Actions -->
               <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
                 <div class="flex items-center gap-4">
                   <span class="text-sm text-gray-500">Share:</span>
-                  <button class="text-gray-400 hover:text-accent transition-colors" onclick={`navigator.clipboard.writeText(window.location.origin + '/blog#post-${post.slug}')`}>
+                  <button class="text-gray-400 hover:text-accent transition-colors" onclick={`navigator.clipboard.writeText(window.location.origin + '/blog#post-${post.data.slug || post.id}')`}>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                     </svg>
                   </button>
                 </div>
                 <a 
-                  href={`#post-${post.slug}`}
+                  href={`#post-${post.data.slug || post.id}`}
                   class="text-accent font-medium hover:underline flex items-center gap-2"
                 >
                   Permanent Link
